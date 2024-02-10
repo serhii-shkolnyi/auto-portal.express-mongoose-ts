@@ -12,3 +12,12 @@ export interface IActionToken extends Document {
   tokenType: EActionTokenType;
   _userId: Types.ObjectId;
 }
+
+export interface ITokenPair {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface IToken extends ITokenPair, Document {
+  _userId: Types.ObjectId;
+}
