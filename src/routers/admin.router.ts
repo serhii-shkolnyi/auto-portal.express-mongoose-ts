@@ -1,6 +1,7 @@
 import { Router } from "express";
 
-import { authController } from "../controllers";
+import { adminController, authController } from "../controllers";
+import { EUserRole } from "../enums";
 import { authMiddleware, commonMiddleware } from "../middlewares";
 import { UserValidator } from "../validators";
 
@@ -23,4 +24,17 @@ router.post(
   commonMiddleware.isBodyValid(UserValidator.login),
   authController.signInAdmin,
 );
+
+router.post(
+  "/createShowroom",
+  authMiddleware.checkAccessToken(EUserRole.ADMIN),
+  adminController.createShowroom,
+);
+
+router.post(
+  "/createRole",
+  authMiddleware.checkAccessToken(EUserRole.ADMIN),
+  adminController.createRole,
+);
+
 export const adminRouter = router;
