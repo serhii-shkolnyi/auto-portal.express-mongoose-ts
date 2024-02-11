@@ -13,6 +13,12 @@ class AdminService {
     return await showroomRepository.create(dto);
   }
   public async createRole(dto: Partial<IRole>): Promise<IRole> {
+    const allRolesOfShowroom = await roleRepository.getManyByParams({
+      _showroomId: dto._showroomId,
+    });
+    if (allRolesOfShowroom.map((role) => role.role === dto.role)) {
+      throw new ApiError("This role already exists", 400);
+    }
     return await roleRepository.create(dto);
   }
 }

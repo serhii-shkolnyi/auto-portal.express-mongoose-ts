@@ -12,7 +12,7 @@ import {
   tokenRepository,
   userRepository,
 } from "../repositories";
-import { ILogin, ITokenPair, IUser } from "../types";
+import { ILogin, IToken, ITokenPair, IUser } from "../types";
 import { actionTokenService } from "./action-token.service";
 import { emailService } from "./email.service";
 import { passwordService } from "./password.service";
@@ -116,6 +116,10 @@ class AuthService {
     await tokenRepository.create({ ...jwtTokens, _userId: admin._id });
 
     return jwtTokens;
+  }
+
+  public async logoutAllAdmin(dto: Partial<IToken>): Promise<void> {
+    await tokenRepository.deleteManyByParams({ _userId: dto._userId });
   }
 }
 

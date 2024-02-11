@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { authService } from "../services";
-import { ILogin, IUser } from "../types";
+import { ILogin, ITokenPayload, IUser } from "../types";
 
 class AuthController {
   public async signUpAdmin(req: Request, res: Response, next: NextFunction) {
@@ -37,6 +37,18 @@ class AuthController {
       const jwtTokens = await authService.signInAdmin(body);
 
       return res.json({ data: jwtTokens });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async logoutAllAdmin(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { userId } = req.res.locals.jwtPayload as Partial<ITokenPayload>;
+
+      await authService.logoutAllAdmin({ _userId: userId });
+
+      return res.sendStatus(204);
     } catch (e) {
       next(e);
     }

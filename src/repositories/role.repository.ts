@@ -10,6 +10,10 @@ class RoleRepository {
   public async getOneByParams(params: FilterQuery<IRole>): Promise<IRole> {
     return await Role.findOne(params);
   }
+
+  public async getManyByParams(params: FilterQuery<IRole>): Promise<IRole[]> {
+    return await Role.find({ params });
+  }
 }
 
 export const roleRepository = new RoleRepository();

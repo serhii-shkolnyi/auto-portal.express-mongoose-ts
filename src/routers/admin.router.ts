@@ -26,6 +26,12 @@ router.post(
 );
 
 router.post(
+  "/logoutAll",
+  authMiddleware.checkAccessToken(EUserRole.ADMIN),
+  authController.logoutAllAdmin,
+);
+
+router.post(
   "/createShowroom",
   authMiddleware.checkAccessToken(EUserRole.ADMIN),
   adminController.createShowroom,
