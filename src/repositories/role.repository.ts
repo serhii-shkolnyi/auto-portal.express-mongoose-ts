@@ -11,8 +11,8 @@ class RoleRepository {
     return await Role.findOne(params);
   }
 
-  public async getManyByParams(params: FilterQuery<IRole>): Promise<IRole[]> {
-    return await Role.find({ params });
+  public async getManyByParams(dto: Partial<IRole>): Promise<IRole[]> {
+    return await Role.find({ _showroomId: dto._showroomId });
   }
 }
 

@@ -23,19 +23,19 @@ if (entity.showroom === "auto-portal") {
   db.roles.insertMany([
     {
       role: "admin",
-      _showroomId: `${autoPortalId}`,
+      _showroomId: ObjectId(autoPortalId),
       createdAt: new Date(),
       updatedAt: new Date(),
     },
     {
       role: "manager",
-      _showroomId: `${autoPortalId}`,
+      _showroomId: ObjectId(autoPortalId),
       createdAt: new Date(),
       updatedAt: new Date(),
     },
     {
       role: "seller",
-      _showroomId: `${autoPortalId}`,
+      _showroomId: ObjectId(autoPortalId),
       createdAt: new Date(),
       updatedAt: new Date(),
     },
