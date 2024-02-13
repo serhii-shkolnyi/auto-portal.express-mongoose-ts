@@ -1,10 +1,10 @@
 import { model, Schema } from "mongoose";
 
-import { IShowroom } from "../types";
+import { IBrand } from "../types";
 
-const showroomSchema = new Schema(
+const brandSchema = new Schema(
   {
-    showroom: {
+    brand: {
       type: String,
       required: true,
     },
@@ -15,4 +15,4 @@ const showroomSchema = new Schema(
   },
 );
 
-export const Showroom = model<IShowroom>("showroom", showroomSchema);
+export const Brand = model<IBrand>("brand", brandSchema);

@@ -1,10 +1,10 @@
 import { model, Schema } from "mongoose";
 
-import { IShowroom } from "../types";
+import { IOblast } from "../types";
 
-const showroomSchema = new Schema(
+const oblastSchema = new Schema(
   {
-    showroom: {
+    oblast: {
       type: String,
       required: true,
     },
@@ -15,4 +15,4 @@ const showroomSchema = new Schema(
   },
 );
 
-export const Showroom = model<IShowroom>("showroom", showroomSchema);
+export const Oblast = model<IOblast>("oblast", oblastSchema);
