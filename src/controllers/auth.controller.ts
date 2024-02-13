@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
+import { UserPresenter } from "../presenters";
 import { authService } from "../services";
 import { ILogin, ITokenPayload, IUser } from "../types";
 
@@ -9,7 +10,9 @@ class AuthController {
       const body = req.body as Partial<IUser>;
       const createdAdmin = await authService.signUpAdmin(body);
 
-      return res.json({ data: createdAdmin }).status(200);
+      return res
+        .json({ data: UserPresenter.userResponse(createdAdmin) })
+        .status(200);
     } catch (e) {
       next(e);
     }
@@ -49,6 +52,23 @@ class AuthController {
       await authService.logoutAllAdmin({ _userId: userId });
 
       return res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async refreshAdmin(req: Request, res: Response, next: NextFunction) {
+    try {
+      const jwtPayload = req.res.locals.jwtPayload as ITokenPayload;
+      const refreshToken = req.res.locals.refreshToken as string;
+      console.log(jwtPayload);
+
+      const jwtTokens = await authService.refreshAdmin(
+        jwtPayload,
+        refreshToken,
+      );
+
+      return res.json({ data: jwtTokens });
     } catch (e) {
       next(e);
     }

@@ -32,6 +32,12 @@ router.post(
 );
 
 router.post(
+  "/refresh",
+  authMiddleware.checkRefreshToken(EUserRole.ADMIN),
+  authController.refreshAdmin,
+);
+
+router.post(
   "/createShowroom",
   authMiddleware.checkAccessToken(EUserRole.ADMIN),
   adminController.createShowroom,

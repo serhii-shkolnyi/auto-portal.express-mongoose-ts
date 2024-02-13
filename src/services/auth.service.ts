@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 import {
   EAccountStatus,
   EAccountType,
@@ -12,7 +14,7 @@ import {
   tokenRepository,
   userRepository,
 } from "../repositories";
-import { ILogin, IToken, ITokenPair, IUser } from "../types";
+import { ILogin, IToken, ITokenPair, ITokenPayload, IUser } from "../types";
 import { actionTokenService } from "./action-token.service";
 import { emailService } from "./email.service";
 import { passwordService } from "./password.service";
@@ -97,6 +99,11 @@ class AuthService {
       throw new ApiError("Not valid email or password", 401);
     }
 
+    const isMatch = await passwordService.compare(dto.password, admin.password);
+    if (!isMatch) {
+      throw new ApiError("Not valid email or password", 401);
+    }
+
     const role = await roleRepository.getOneByParams({
       _id: admin._roleId,
     });
@@ -104,9 +111,8 @@ class AuthService {
       throw new ApiError("You are not admin", 401);
     }
 
-    const isMatch = await passwordService.compare(dto.password, admin.password);
-    if (!isMatch) {
-      throw new ApiError("Not valid email or password", 401);
+    if (admin.accountStatus !== EAccountStatus.ACTIVE) {
+      throw new ApiError("You are not activate account", 401);
     }
 
     const jwtTokens = tokenService.generateTokenPair({
@@ -120,6 +126,24 @@ class AuthService {
 
   public async logoutAllAdmin(dto: Partial<IToken>): Promise<void> {
     await tokenRepository.deleteManyByParams({ _userId: dto._userId });
+  }
+
+  public async refreshAdmin(
+    jwtPayload: ITokenPayload,
+    refreshToken: string,
+  ): Promise<ITokenPair> {
+    await tokenRepository.deleteOneByParams({ refreshToken });
+
+    const jwtTokens = tokenService.generateTokenPair({
+      userId: jwtPayload.userId,
+      roleId: jwtPayload.roleId,
+    });
+    await tokenRepository.create({
+      ...jwtTokens,
+      _userId: new Types.ObjectId(jwtPayload.userId),
+    });
+
+    return jwtTokens;
   }
 }
 
