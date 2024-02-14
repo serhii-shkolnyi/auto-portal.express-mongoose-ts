@@ -14,7 +14,14 @@ import {
   tokenRepository,
   userRepository,
 } from "../repositories";
-import { ILogin, IToken, ITokenPair, ITokenPayload, IUser } from "../types";
+import {
+  IChangePassword,
+  ILogin,
+  IToken,
+  ITokenPair,
+  ITokenPayload,
+  IUser,
+} from "../types";
 import { actionTokenService } from "./action-token.service";
 import { emailService } from "./email.service";
 import { passwordService } from "./password.service";
@@ -194,6 +201,40 @@ class AuthService {
       }),
       actionTokenRepository.deleteActionTokenByParams({ actionToken }),
     ]);
+  }
+
+  public async changePasswordAdmin(
+    dto: IChangePassword,
+    jwtPayload: ITokenPayload,
+  ) {
+    const user = await userRepository.getOneByParams({
+      _id: jwtPayload.userId,
+    });
+    if (!user) {
+      throw new ApiError("User not found", 404);
+    }
+
+    const isMatch = await passwordService.compare(
+      dto.oldPassword,
+      user.password,
+    );
+    if (!isMatch) {
+      throw new ApiError("Old password is invalid", 400);
+    }
+
+    const { role } = await roleRepository.getOneByParams(user._roleId);
+
+    if (role !== EUserRole.ADMIN) {
+      throw new ApiError("You not admin", 400);
+    }
+    const hashedNewPassword = await passwordService.hash(
+      dto.newPassword,
+      EUserRole.ADMIN,
+    );
+
+    await userRepository.updateById(user._id, {
+      password: hashedNewPassword,
+    });
   }
 }
 

@@ -55,6 +55,13 @@ router.put(
 );
 
 router.post(
+  "/changePassword",
+  commonMiddleware.isBodyValid(UserValidator.changePassword),
+  authMiddleware.checkAccessToken(EUserRole.ADMIN),
+  authController.changePasswordAdmin,
+);
+
+router.post(
   "/createShowroom",
   authMiddleware.checkAccessToken(EUserRole.ADMIN),
   adminController.createShowroom,

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { UserPresenter } from "../presenters";
 import { authService } from "../services";
-import { ILogin, ITokenPayload, IUser } from "../types";
+import { IChangePassword, ILogin, ITokenPayload, IUser } from "../types";
 
 class AuthController {
   public async signUpAdmin(req: Request, res: Response, next: NextFunction) {
@@ -99,6 +99,23 @@ class AuthController {
       const newPassword = req.body.newPassword;
 
       await authService.setForgotPasswordAdmin(newPassword, actionToken);
+
+      return res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async changePasswordAdmin(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const jwtPayload = req.res.locals.jwtPayload as ITokenPayload;
+      const body = req.body as IChangePassword;
+
+      await authService.changePasswordAdmin(body, jwtPayload);
 
       return res.sendStatus(204);
     } catch (e) {
