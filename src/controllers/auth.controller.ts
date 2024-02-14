@@ -61,7 +61,6 @@ class AuthController {
     try {
       const jwtPayload = req.res.locals.jwtPayload as ITokenPayload;
       const refreshToken = req.res.locals.refreshToken as string;
-      console.log(jwtPayload);
 
       const jwtTokens = await authService.refreshAdmin(
         jwtPayload,
@@ -69,6 +68,39 @@ class AuthController {
       );
 
       return res.json({ data: jwtTokens });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async forgotPasswordAdmin(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const user = req.res.locals as IUser;
+
+      await authService.forgotPasswordAdmin(user);
+
+      return res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async setForgotPasswordAdmin(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const actionToken = req.params.token;
+      const newPassword = req.body.newPassword;
+
+      await authService.setForgotPasswordAdmin(newPassword, actionToken);
+
+      return res.sendStatus(204);
     } catch (e) {
       next(e);
     }

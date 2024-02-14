@@ -2,7 +2,11 @@ import { Router } from "express";
 
 import { adminController, authController } from "../controllers";
 import { EUserRole } from "../enums";
-import { authMiddleware, commonMiddleware } from "../middlewares";
+import {
+  authMiddleware,
+  commonMiddleware,
+  userMiddleware,
+} from "../middlewares";
 import { UserValidator } from "../validators";
 
 const router = Router();
@@ -35,6 +39,19 @@ router.post(
   "/refresh",
   authMiddleware.checkRefreshToken(EUserRole.ADMIN),
   authController.refreshAdmin,
+);
+
+router.post(
+  "/forgotPassword",
+  commonMiddleware.isBodyValid(UserValidator.forgotPassword),
+  userMiddleware.isUserExist("email"),
+  authController.forgotPasswordAdmin,
+);
+
+router.put(
+  "/forgotPassword/:token",
+  commonMiddleware.isBodyValid(UserValidator.setForgotPassword),
+  authController.setForgotPasswordAdmin,
 );
 
 router.post(

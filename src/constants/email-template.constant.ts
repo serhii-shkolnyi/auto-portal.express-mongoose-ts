@@ -5,4 +5,9 @@ export const emailTemplateConstant = {
     templateName: "activate-account",
     subject: "Account activation is required!",
   },
+
+  [EEmailAction.FORGOT_PASSWORD]: {
+    templateName: "forgot-password",
+    subject: "Restore password",
+  },
 };

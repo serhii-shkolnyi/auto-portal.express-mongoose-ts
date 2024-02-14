@@ -64,7 +64,7 @@ class AuthMiddleware {
         }
 
         const refreshToken = tokenString.split("Bearer ")[1];
-        console.log(tokenString);
+
         const jwtPayload = tokenService.checkToken(
           refreshToken,
           ETokenType.REFRESH,
