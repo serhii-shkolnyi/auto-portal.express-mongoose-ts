@@ -1,8 +1,8 @@
 import { model, Schema, Types } from "mongoose";
 
 import { EAccountStatus, EAccountType } from "../enums";
+import { IUser } from "../types";
 import { Role } from "./role.model";
-import {IUser} from "../types";
 
 const userSchema = new Schema(
   {

@@ -18,6 +18,19 @@ class AuthController {
     }
   }
 
+  public async signUp(req: Request, res: Response, next: NextFunction) {
+    try {
+      const body = req.body as Partial<IUser>;
+      const createdUser = await authService.signUp(body);
+
+      return res
+        .json({ data: UserPresenter.userResponse(createdUser) })
+        .status(200);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   public async signUpVerifyAdmin(
     req: Request,
     res: Response,
@@ -27,6 +40,18 @@ class AuthController {
       const token = req.params.token;
 
       await authService.signUpVerifyAdmin(token);
+
+      return res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async signUpVerify(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = req.params.token;
+
+      await authService.signUpVerify(token);
 
       return res.sendStatus(204);
     } catch (e) {

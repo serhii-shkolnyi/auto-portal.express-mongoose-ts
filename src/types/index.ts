@@ -1,5 +1,6 @@
 export * from "./auth.type";
 export * from "./brand.type";
+export * from "./car.type";
 export * from "./model.type";
 export * from "./oblast.type";
 export * from "./role.type";
