@@ -1,4 +1,5 @@
 export * from "./action-token.repository";
+export * from "./car.repository";
 export * from "./role.repository";
 export * from "./showroom.repository";
 export * from "./token.repository";

@@ -1,11 +1,13 @@
 import { Router } from "express";
 
 import { adminRouter } from "./admin.router";
+import { carRouter } from "./car.router";
 import { userRouter } from "./user.router";
 
 const router = Router();
 
 router.use("/admin", adminRouter);
 router.use("/user", userRouter);
+router.use("/car", carRouter);
 
 export const apiRouter = router;

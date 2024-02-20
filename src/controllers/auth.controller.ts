@@ -70,6 +70,17 @@ class AuthController {
     }
   }
 
+  public async signIn(req: Request, res: Response, next: NextFunction) {
+    try {
+      const body = req.body as ILogin;
+      const jwtTokens = await authService.signIn(body);
+
+      return res.json({ data: jwtTokens });
+    } catch (e) {
+      next(e);
+    }
+  }
+
   public async logoutAllAdmin(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId } = req.res.locals.jwtPayload as Partial<ITokenPayload>;

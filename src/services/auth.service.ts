@@ -200,6 +200,32 @@ class AuthService {
     return jwtTokens;
   }
 
+  public async signIn(dto: ILogin): Promise<ITokenPair> {
+    const user = await userRepository.getOneByParams({
+      email: dto.email,
+    });
+    if (!user) {
+      throw new ApiError("Not valid email or password", 401);
+    }
+
+    const isMatch = await passwordService.compare(dto.password, user.password);
+    if (!isMatch) {
+      throw new ApiError("Not valid email or password", 401);
+    }
+
+    if (user.accountStatus !== EAccountStatus.ACTIVE) {
+      throw new ApiError("You are not activate account", 401);
+    }
+
+    const jwtTokens = tokenService.generateTokenPair({
+      userId: user._id,
+      roleId: user._roleId,
+    });
+    await tokenRepository.create({ ...jwtTokens, _userId: user._id });
+
+    return jwtTokens;
+  }
+
   public async logoutAllAdmin(dto: Partial<IToken>): Promise<void> {
     await tokenRepository.deleteManyByParams({ _userId: dto._userId });
   }

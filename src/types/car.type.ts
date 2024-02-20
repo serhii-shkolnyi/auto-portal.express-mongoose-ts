@@ -6,6 +6,7 @@ export interface ICar {
   brand: string;
   model: string;
   year: string;
+  description: string;
   price: string;
   currency: ECurrency;
   oblast: EOblastEnum;

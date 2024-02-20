@@ -20,7 +20,7 @@ class AuthMiddleware {
     }
   }
 
-  public checkAccessToken(dto: EUserRole) {
+  public checkAccessToken(dto: string[]) {
     return async function (req: Request, res: Response, next: NextFunction) {
       try {
         const tokenString = req.get("Authorization");
@@ -38,7 +38,10 @@ class AuthMiddleware {
         const role = await roleRepository.getOneByParams({
           _id: jwtPayload.roleId,
         });
-        if (dto !== role.role) {
+
+        const matchRole = dto.includes(role.role);
+
+        if (!matchRole) {
           throw new ApiError("Not enough rights", 401);
         }
 

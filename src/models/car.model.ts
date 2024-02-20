@@ -15,11 +15,15 @@ const carSchema = new Schema(
       required: true,
     },
     year: {
+      type: Number,
+      required: true,
+    },
+    description: {
       type: String,
       required: true,
     },
     price: {
-      type: String,
+      type: Number,
       required: true,
     },
     currency: {

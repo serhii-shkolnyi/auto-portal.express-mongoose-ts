@@ -10,4 +10,9 @@ export const emailTemplateConstant = {
     templateName: "forgot-password",
     subject: "Restore password",
   },
+
+  [EEmailAction.OBSCENE_WORDS]: {
+    templateName: "obscene-words",
+    subject: "Obscene Words",
+  },
 };

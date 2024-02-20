@@ -31,7 +31,7 @@ router.post(
 
 router.post(
   "/logoutAll",
-  authMiddleware.checkAccessToken(EUserRole.ADMIN),
+  authMiddleware.checkAccessToken([EUserRole.ADMIN]),
   authController.logoutAllAdmin,
 );
 
@@ -57,19 +57,19 @@ router.put(
 router.post(
   "/changePassword",
   commonMiddleware.isBodyValid(UserValidator.changePassword),
-  authMiddleware.checkAccessToken(EUserRole.ADMIN),
+  authMiddleware.checkAccessToken([EUserRole.ADMIN]),
   authController.changePasswordAdmin,
 );
 
 router.post(
   "/createShowroom",
-  authMiddleware.checkAccessToken(EUserRole.ADMIN),
+  authMiddleware.checkAccessToken([EUserRole.ADMIN]),
   adminController.createShowroom,
 );
 
 router.post(
   "/createRole",
-  authMiddleware.checkAccessToken(EUserRole.ADMIN),
+  authMiddleware.checkAccessToken([EUserRole.ADMIN]),
   adminController.createRole,
 );
 
