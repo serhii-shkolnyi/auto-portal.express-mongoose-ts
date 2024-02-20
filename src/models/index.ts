@@ -1,5 +1,7 @@
 export * from "./action-token.model";
 export * from "./brand.model";
+export * from "./car.model";
+export * from "./currency.model";
 export * from "./model.model";
 export * from "./oblast.model";
 export * from "./role.model";

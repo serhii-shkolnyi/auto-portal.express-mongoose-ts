@@ -24,4 +24,6 @@ export const apiConfig = {
 
   SMTP_USER: process.env.SMTP_USER,
   SMTP_PASSWORD: process.env.SMTP_PASSWORD,
+
+  API_PRIVAT_BANK_EXCHANGE: process.env.API_PRIVAT_BANK_EXCHANGE,
 };
