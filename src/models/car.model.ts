@@ -31,6 +31,18 @@ const carSchema = new Schema(
       enum: ECurrency,
       required: true,
     },
+    priceInUAH: {
+      type: String,
+      required: true,
+    },
+    priceInUSD: {
+      type: String,
+      required: true,
+    },
+    priceInEUR: {
+      type: String,
+      required: true,
+    },
     oblast: {
       type: String,
       enum: EOblastEnum,

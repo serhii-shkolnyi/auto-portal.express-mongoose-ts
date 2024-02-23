@@ -5,6 +5,10 @@ class CurrencyRepository {
   public async create(dto: ICurrency): Promise<ICurrency> {
     return await Currency.create(dto);
   }
+
+  public async getLastRecord(): Promise<ICurrency> {
+    return await Currency.findOne().sort({ createdAt: -1 });
+  }
 }
 
 export const currencyRepository = new CurrencyRepository();

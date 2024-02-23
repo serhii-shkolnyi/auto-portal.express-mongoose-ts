@@ -9,6 +9,9 @@ export interface ICar {
   description: string;
   price: string;
   currency: ECurrency;
+  priceInUAH: number;
+  priceInUSD: number;
+  priceInEUR: number;
   oblast: EOblastEnum;
   _userId: Types.ObjectId;
   carStatus: ECarStatus;

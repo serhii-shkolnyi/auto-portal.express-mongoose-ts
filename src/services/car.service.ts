@@ -4,6 +4,7 @@ import { obsceneWordsConstant } from "../constants/obscene-words.constant";
 import {
   EAccountType,
   ECarStatus,
+  ECurrency,
   EEmailAction,
   EShowroom,
   EUserRole,
@@ -11,6 +12,7 @@ import {
 import { ApiError } from "../errors";
 import {
   carRepository,
+  currencyRepository,
   roleRepository,
   showroomRepository,
   userRepository,
@@ -54,6 +56,17 @@ class CarService {
       });
     } else {
       body.carStatus = ECarStatus.ACTIVE;
+      const course = await currencyRepository.getLastRecord();
+      let priceInUAH: number;
+      let priceInUSD: number;
+      let priceInEUR: number;
+
+      switch (body.currency) {
+        case ECurrency.UAH:
+          priceInUAH = 1;
+          priceInUSD = 1;
+          priceInEUR = 1;
+      }
     }
     return await carRepository.create({ ...body, _userId: userId });
   }

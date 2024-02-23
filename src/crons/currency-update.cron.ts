@@ -23,7 +23,6 @@ const currencyUpdate = async () => {
     });
 
     await currencyRepository.create(exchangeRate);
-    console.log(`CronJob exchangeRate successfully ${new Date()}`);
   } catch (e) {
     throw new ApiError(e.message, e.status);
   }
