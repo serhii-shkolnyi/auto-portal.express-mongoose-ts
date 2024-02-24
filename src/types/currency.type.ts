@@ -1,9 +1,12 @@
+import { Types } from "mongoose";
+
 import { ECurrency } from "../enums";
 
 export interface ICurrency {
+  _id?: Types.ObjectId;
   USD: number;
   EUR: number;
-  [key: string]: number;
+  [key: string]: number | Types.ObjectId;
 }
 
 export interface IExchange {

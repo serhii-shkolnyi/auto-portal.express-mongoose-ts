@@ -28,4 +28,4 @@ const currencyUpdate = async () => {
   }
 };
 
-export const currencyUpdateCrone = new CronJob("0 0 0 * * *", currencyUpdate);
+export const currencyUpdateCrone = new CronJob("42 20 * * *", currencyUpdate);

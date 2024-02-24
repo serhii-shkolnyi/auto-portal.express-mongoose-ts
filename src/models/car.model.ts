@@ -2,6 +2,7 @@ import { model, Schema, Types } from "mongoose";
 
 import { EAccountStatus, ECarStatus, ECurrency, EOblastEnum } from "../enums";
 import { ICar } from "../types";
+import { Currency } from "./currency.model";
 import { User } from "./user.model";
 
 const carSchema = new Schema(
@@ -57,6 +58,16 @@ const carSchema = new Schema(
       type: String,
       enum: ECarStatus,
       default: EAccountStatus.INACTIVE,
+    },
+    _currencyIdCreateCar: {
+      type: Types.ObjectId,
+      required: true,
+      ref: Currency,
+    },
+    _currencyIdUpdateCar: {
+      type: Types.ObjectId,
+      default: null,
+      ref: Currency,
     },
     avatar: {
       type: String,

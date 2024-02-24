@@ -57,15 +57,28 @@ class CarService {
     } else {
       body.carStatus = ECarStatus.ACTIVE;
       const course = await currencyRepository.getLastRecord();
-      let priceInUAH: number;
-      let priceInUSD: number;
-      let priceInEUR: number;
-
       switch (body.currency) {
-        case ECurrency.UAH:
-          priceInUAH = 1;
-          priceInUSD = 1;
-          priceInEUR = 1;
+        case ECurrency.UAH: {
+          body.priceInUAH = body.price;
+          body.priceInUSD = Math.round(body.price / course.USD);
+          body.priceInEUR = Math.round(body.price / course.EUR);
+          body._currencyIdCreateCar = course._id;
+          break;
+        }
+        case ECurrency.USD: {
+          body.priceInUSD = body.price;
+          body.priceInUAH = Math.round(body.price * course.USD);
+          body.priceInEUR = Math.round(body.priceInUAH / course.EUR);
+          body._currencyIdCreateCar = course._id;
+          break;
+        }
+        case ECurrency.EUR: {
+          body.priceInEUR = body.price;
+          body.priceInUAH = Math.round(body.price * course.EUR);
+          body.priceInEUR = Math.round(body.priceInUAH / course.USD);
+          body._currencyIdCreateCar = course._id;
+          break;
+        }
       }
     }
     return await carRepository.create({ ...body, _userId: userId });
