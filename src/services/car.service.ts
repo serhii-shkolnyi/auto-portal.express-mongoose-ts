@@ -17,6 +17,7 @@ import {
   showroomRepository,
   userRepository,
 } from "../repositories";
+import { viewRepository } from "../repositories/view.repository";
 import { ICar } from "../types";
 import { emailService } from "./email.service";
 
@@ -81,7 +82,10 @@ class CarService {
         }
       }
     }
-    return await carRepository.create({ ...body, _userId: userId });
+    const car = await carRepository.create({ ...body, _userId: userId });
+    await viewRepository.create(car._id);
+
+    return car;
   }
 }
 
