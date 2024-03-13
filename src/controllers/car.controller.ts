@@ -20,6 +20,16 @@ class CarController {
       next(e);
     }
   }
+
+  public async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const car = await carService.getAll();
+
+      return res.json({ data: car }).status(200);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
 
 export const carController = new CarController();

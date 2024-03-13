@@ -87,6 +87,10 @@ class CarService {
 
     return car;
   }
+
+  public async getAll() {
+    return await carRepository.getAll();
+  }
 }
 
 export const carService = new CarService();

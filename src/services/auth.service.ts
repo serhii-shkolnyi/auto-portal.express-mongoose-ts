@@ -75,7 +75,13 @@ class AuthService {
       email: dto.email,
     });
     if (userFromDb) {
-      throw new ApiError("User already exists", 400);
+      throw new ApiError("користувач з такою поштою вже існує", 400);
+    }
+    const userFromDbPhone = await userRepository.getOneByParams({
+      phone: dto.phone,
+    });
+    if (userFromDbPhone) {
+      throw new ApiError("користувач з таким комером телефону вже існує", 400);
     }
 
     const hashedPassword = await passwordService.hash(

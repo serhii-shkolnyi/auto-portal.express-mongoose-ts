@@ -13,4 +13,6 @@ router.post(
   authMiddleware.checkAccessToken([EUserRole.SELLER, EUserRole.ADMIN]),
   carController.createCar,
 );
+
+router.get("/cars", carController.getAll);
 export const carRouter = router;
