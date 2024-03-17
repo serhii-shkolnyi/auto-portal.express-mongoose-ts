@@ -1,3 +1,4 @@
 # AUTO PORTAL
 
-## Test
+## npm run start:db
+## npm run start:dev
