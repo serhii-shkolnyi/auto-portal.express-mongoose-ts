@@ -75,7 +75,7 @@ class AuthController {
       const body = req.body as ILogin;
       const jwtTokens = await authService.signIn(body);
 
-      return res.json({ data: jwtTokens });
+      return res.json(jwtTokens);
     } catch (e) {
       next(e);
     }

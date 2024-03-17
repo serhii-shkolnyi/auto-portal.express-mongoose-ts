@@ -91,6 +91,12 @@ class CarService {
   public async getAll() {
     return await carRepository.getAll();
   }
+  public async getId(_id: Types.ObjectId) {
+    return await carRepository.getId(_id);
+  }
+  public async getAllForUser(userId: Types.ObjectId) {
+    return await carRepository.getAllForUser(userId);
+  }
 }
 
 export const carService = new CarService();

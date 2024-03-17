@@ -11,6 +11,12 @@ class CarRepository {
   public async getAll(): Promise<ICar[]> {
     return await Car.find();
   }
+  public async getId(_id: Types.ObjectId): Promise<ICar[]> {
+    return await Car.findById(_id);
+  }
+  public async getAllForUser(userId: Types.ObjectId): Promise<ICar[]> {
+    return await Car.find({ _userId: userId });
+  }
   public async getOneByParams(params: FilterQuery<ICar>): Promise<ICar> {
     return await Car.findOne(params);
   }

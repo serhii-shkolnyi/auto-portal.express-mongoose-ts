@@ -14,5 +14,11 @@ router.post(
   carController.createCar,
 );
 
-router.get("/cars", carController.getAll);
+router.get("/", carController.getAll);
+router.get(
+  "/userId",
+  authMiddleware.checkAccessToken([EUserRole.SELLER, EUserRole.ADMIN]),
+  carController.getAllForUser,
+);
+router.post("/carId", carController.getId);
 export const carRouter = router;
